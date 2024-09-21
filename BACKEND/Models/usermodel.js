@@ -23,6 +23,7 @@ var userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    wishlist:[{type: mongoose.Schema.Types.ObjectId, ref:"Product"}],
 });
 userSchema.pre("save", async function (next) {
     const salt =await  bcrypt.genSaltSync(10);
@@ -33,6 +34,7 @@ userSchema.methods.ispasswordmatched = async function(enteredpassword) {
     return await bcrypt.compare(enteredpassword, this.password);
 
 };
+
 
 //Export the model
 const User = mongoose.model('User', userSchema);
